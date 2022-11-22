@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+
+  ubuntu:
+    image: ubuntu:22.04
+    restart: 'no'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: True
+    tty: True
+    # entrypoint: ['/bin/bash']
