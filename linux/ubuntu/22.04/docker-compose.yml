@@ -5,9 +5,11 @@ services:
   ubuntu:
     image: ubuntu:22.04
     restart: 'no'
+    env_file:
+      - ./.env
     build:
       context: .
       dockerfile: Dockerfile
-    # stdin_open: True
-    # tty: True
-    entrypoint: ['/bin/bash']
+    volumes:
+      - ./data:/data
+    command: "sleep infinity"

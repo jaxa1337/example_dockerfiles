@@ -9,4 +9,3 @@ RUN apt update && \
 RUN mkdir -p /data
 
 CMD ["/bin/bash"]
-# CMD /bin/bash
