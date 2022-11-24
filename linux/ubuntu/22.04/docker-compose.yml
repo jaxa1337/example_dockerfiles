@@ -8,6 +8,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    stdin_open: True
-    tty: True
-    # entrypoint: ['/bin/bash']
+    # stdin_open: True
+    # tty: True
+    entrypoint: ['/bin/bash']
