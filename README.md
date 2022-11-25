@@ -72,6 +72,16 @@
 
         stop$ docker compose -f ./monitoring/docker-container-stats/docker-compose.yml down
         ```
+    - Portainer:
+
+        Use Docker Compose:
+        ```shell
+        start$ docker compose -f ./monitoring/portainer/docker-compose.yml up -d --build --remove-orphans --no-deps
+
+        attach_to_container$ docker exec -it portainer /bin/bash
+
+        stop$ docker compose -f ./monitoring/portainer/docker-compose.yml down
+        ```
 ## Author
 
     - Jakub Kabat - github:jaxa1337
