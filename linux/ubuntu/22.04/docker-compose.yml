@@ -3,6 +3,7 @@ version: '3.9'
 services:
 
   ubuntu:
+    name: ubuntu-22.04
     image: ubuntu:22.04
     restart: 'no'
     env_file:
