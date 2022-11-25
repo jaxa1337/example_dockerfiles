@@ -61,7 +61,17 @@
         ```shell
         start$ docker run --rm --name python3.6.8 -it $(docker build -q -f python/3.6.8/Dockerfile -t python3.6.8 .)
         ```
+4. Monitoring:
+    - Docker Container Stats:
 
+        Use Docker Compose:
+        ```shell
+        start$ docker compose -f ./monitoring/docker-container-stats/docker-compose.yml up -d --build --remove-orphans --no-deps
+
+        attach_to_container$ docker exec -it docker-stats /bin/bash
+
+        stop$ docker compose -f ./monitoring/docker-container-stats/docker-compose.yml down
+        ```
 ## Author
 
     - Jakub Kabat - github:jaxa1337
