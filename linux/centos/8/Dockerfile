@@ -9,4 +9,4 @@ RUN dnf -y install python3 \
     vim \
     nano 
 
-CMD /bin/sh
+CMD /bin/bash

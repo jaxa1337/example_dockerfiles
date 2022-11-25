@@ -1,5 +1,5 @@
-# FROM quay.io/centos/centos:stream9
-FROM quay.io/eurolinux/centos-stream-9
+FROM quay.io/centos/centos:stream9
+# FROM quay.io/eurolinux/centos-stream-9
 
 RUN dnf -y update
 RUN dnf -y install python3 \
@@ -7,4 +7,4 @@ RUN dnf -y install python3 \
     vim \
     nano 
 
-CMD /bin/sh
+CMD /bin/bash

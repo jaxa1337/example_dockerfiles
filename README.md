@@ -13,21 +13,23 @@
 2. Linux:
     - __Centos7__
         ```shell
-        start$ docker run --rm -it $(docker build -q -f linux/centos/7/Dockerfile -t centos7 .)
+        start$ docker run --rm -it -v $(pwd)/linux/centos/7/data:/data $(docker build -q -f linux/centos/7/Dockerfile -t centos7 .)
         ```
     - __Centos8__
         ```shell
-        start$ docker run --rm -it $(docker build -q -f linux/centos/8/Dockerfile -t centos8 .)
+        start$ docker run --rm -it -v $(pwd)/linux/centos/8/data:/data $(docker build -q -f linux/centos/8/Dockerfile -t centos8 .)
         ```
     - __Centos9__
         ```shell
-        start$ docker run --rm -it $(docker build -q -f linux/centos/9/Dockerfile -t centos9 .)
+        start$ docker run --rm -it -v $(pwd)/linux/centos/9/data:/data $(docker build -q -f linux/centos/9/Dockerfile -t centos9 .)
         ```
     - __Ubuntu__
         
         Use Dockerfile: 
         ```shell
-        start$ docker run --rm -it -v $(pwd)/linux/ubuntu/22.04/data:/data $(docker build -q -f linux/ubuntu/22.04/Dockerfile -t ubuntu22.04 .)
+        start$ docker run --rm -it -v $(pwd)/linux/ubuntu/22.04/data:/data --env-file ./linux/ubuntu/22.04/.env $(docker build -q -f linux/ubuntu/22.04/Dockerfile -t ubuntu22.04 .)
+
+        stop$ Just Ctrl+C or exit
         ```
 
         Use Docker-compose:  
@@ -42,7 +44,7 @@
 
         Use Dockerfile:
         ```shell
-        start$ docker run --rm -it $(docker build -q -f linux/aplline/Dockerfile -t apline .)
+        start$ docker run --rm -it -v $(pwd)/linux/apline/22.04/data:/data $(docker build -q -f linux/aplline/Dockerfile -t apline .)
         ```
 
 3. Python:
