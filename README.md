@@ -5,6 +5,7 @@
         ```shell
         start$ docker compose -f ./db/mariadb/docker-compose.yml --env-file ./db/mariadb/.env up -d --build --remove-orphans --no-deps
         ```
+
     - __MySQL__
         ```shell
         start$ docker compose -f ./db/mysql/docker-compose.yml --env-file ./db/mysql/.env up -d --build --remove-orphans --no-deps
@@ -17,18 +18,21 @@
 
         stop$ Just Ctrl+C or exit
         ```
+
     - __Centos8__
         ```shell
         start$ docker run --rm -it -v $(pwd)/linux/centos/8/data:/data --env-file ./linux/centos/8/.env --name centos-8 $(docker build -q -f linux/centos/8/Dockerfile -t centos8 .)
 
         stop$ Just Ctrl+C or exit
         ```
+
     - __Centos9__
         ```shell
         start$ docker run --rm -it -v $(pwd)/linux/centos/9/data:/data --env-file ./linux/centos/9/.env --name centos-9 $(docker build -q -f linux/centos/9/Dockerfile -t centos9 .)
 
         stop$ Just Ctrl+C or exit
         ```
+
     - __Ubuntu__
         
         Use Dockerfile: 
@@ -46,6 +50,7 @@
 
         stop$ docker compose -f ./linux/ubuntu/22.04/docker-compose.yml down
         ```
+
     - __Apline__
 
         Use Dockerfile:
@@ -61,6 +66,7 @@
         ```shell
         start$ docker run --rm --name python3.6.8 -it $(docker build -q -f python/3.6.8/Dockerfile -t python3.6.8 .)
         ```
+
 4. Monitoring:
     - Docker Container Stats:
 
@@ -72,6 +78,7 @@
 
         stop$ docker compose -f ./monitoring/docker-container-stats/docker-compose.yml down
         ```
+        
     - Portainer:
 
         Use Docker Compose:
@@ -83,7 +90,7 @@
         stop$ docker compose -f ./monitoring/portainer/docker-compose.yml down
         ```
     
-    - Lazy Docker:
+    <!-- - Lazy Docker:
 
         Use Docker Compose:
         ```shell
@@ -92,7 +99,7 @@
         attach_to_container$ docker exec -it lazy-docker /bin/bash
 
         stop$ docker compose -f ./monitoring/lazy-docker/docker-compose.yml down
-        ```
+        ``` -->
 ## Author
 
     - Jakub Kabat - github:jaxa1337
