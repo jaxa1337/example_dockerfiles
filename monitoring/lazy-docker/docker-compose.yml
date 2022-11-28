@@ -4,6 +4,8 @@ services:
   lazy-docker:
     image: alpine:3.16
     container_name: lazy-docker
+    env_file:
+      - .env
     build:
       context: .
       args:

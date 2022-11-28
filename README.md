@@ -90,16 +90,16 @@
         stop$ docker compose -f ./monitoring/portainer/docker-compose.yml down
         ```
     
-    <!-- - Lazy Docker:
+    - Lazy Docker:
 
         Use Docker Compose:
         ```shell
         start$ docker compose -f ./monitoring/lazy-docker/docker-compose.yml up -d --build --remove-orphans --no-deps
 
-        attach_to_container$ docker exec -it lazy-docker /bin/bash
+        attach_to_container$ docker exec -it lazy-docker lzd
 
         stop$ docker compose -f ./monitoring/lazy-docker/docker-compose.yml down
-        ``` -->
+        ```
 ## Author
 
     - Jakub Kabat - github:jaxa1337
