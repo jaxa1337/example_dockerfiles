@@ -1,16 +1,36 @@
 ## How to start containers
 
+# Example Docker Files
+
+This repo contains simple Dockerfiles and docker-compose.yml for many apps which I used. 
+
+How to start? Just copy command and run container :D. 
+
+All containers are simple apps for testing some function etc.
+
 1. DB:
     - __Mariadb__
         ```shell
-        start$ docker compose -f ./db/mariadb/docker-compose.yml --env-file ./db/mariadb/.env up -d --build --remove-orphans --no-deps
+        start$ docker compose -f ./db/mariadb/docker-compose.yml --env-file ./db/mariadb/.env up -d --remove-orphans --no-deps
+
+        stop$ docker compose -f ./db/mariadb/docker-compose.yml down
         ```
 
     - __MySQL__
         ```shell
-        start$ docker compose -f ./db/mysql/docker-compose.yml --env-file ./db/mysql/.env up -d --build --remove-orphans --no-deps
+        start$ docker compose -f ./db/mysql/docker-compose.yml --env-file ./db/mysql/.env up -d --remove-orphans --no-deps
+
+        stop$ docker compose -f ./db/mysql/docker-compose.yml down
         ```
 
+    - __PostgreSQL__
+        ```shell
+        start$ docker compose -f ./db/postgres/docker-compose.yml --env-file ./db/postgres/.env up -d --remove-orphans --no-deps
+
+        attach$ docker exec -it postgres-db-1 psql {POSTGRES_DB} -U {POSTGRES_USER}
+
+        stop$ docker compose -f ./db/postgres/docker-compose.yml down
+        ```
 2. Linux:
     - __Centos7__
         ```shell
