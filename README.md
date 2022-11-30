@@ -120,6 +120,15 @@ All containers are simple apps for testing some function etc.
 
         stop$ docker compose -f ./monitoring/lazy-docker/docker-compose.yml down
         ```
+5. PHP
+    - WebDevOps php-nginx-apline
+
+        Use DockerCompose:
+        ```shell
+        start$ docker compose -f ./php/webdevops/php-nginx/apline/docker-compose.yml up -d --build --remove-orphans --no-deps
+        
+        stop$ docker compose -f ./php/webdevops/php-nginx/apline/docker-compose.yml down
+        ```
 ## Author
 
     - Jakub Kabat - github:jaxa1337
