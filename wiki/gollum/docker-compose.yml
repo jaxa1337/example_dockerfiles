@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  wiki:
+    image: genebarker/gollum
+    ports:
+      - 8888:80
+    volumes:
+      - ./provision/data/wiki:/root/wiki
+    command: --http

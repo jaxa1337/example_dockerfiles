@@ -129,6 +129,23 @@ All containers are simple apps for testing some function etc.
         
         stop$ docker compose -f ./php/webdevops/php-nginx/apline/docker-compose.yml down
         ```
+
+6. Wiki
+    - Wiki.JS
+
+        ```shell
+        start$ docker compose -f ./wiki/wiki.js/docker-compose.yml up -d --build --remove-orphans --no-deps
+        
+        stop$ docker compose -f ./wiki/wiki.js/docker-compose.yml down
+        ```
+
+    - Gollum
+
+        ```shell
+        start$ docker compose -f ./wiki/gollum/docker-compose.yml up -d --build --remove-orphans --no-deps
+        
+        stop$ docker compose -f ./wiki/gollum/docker-compose.yml down
+        ```
 ## Author
 
     - Jakub Kabat - github:jaxa1337
