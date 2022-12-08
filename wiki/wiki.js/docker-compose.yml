@@ -14,7 +14,10 @@ services:
       - db-data:/var/lib/postgresql/data
 
   wiki:
-    image: ghcr.io/requarks/wiki:2
+    image: ghcr.io/requarks/wiki:2.5
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - db
     environment:
@@ -26,7 +29,7 @@ services:
       - DB_NAME=wiki
     restart: unless-stopped
     volumes:
-      - ./provision/keys/id_rsa:/etc/wiki/github.pem
+      - ./provision/keys/id_rsa:/home/node/.ssh/id_rsa
     ports:
       - "8888:3000"
 

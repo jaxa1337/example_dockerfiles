@@ -7,4 +7,5 @@ services:
       - 8888:80
     volumes:
       - ./provision/data/wiki:/root/wiki
+      - ./provision/keys/id_rsa:/etc/wiki/github.pem
     command: --http
