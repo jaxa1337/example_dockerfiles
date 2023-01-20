@@ -1,0 +1,68 @@
+version: '3.5'
+
+services:  
+  setup:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1-amd64
+    user: "0"
+    command: >
+      bash -c '
+        echo "Waiting for Elasticsearch availability";
+        curl -s http://secured-elasticsearch-1:${ELASTICSEARCH_PORT:-9200} | grep -q "missing authentication credentials";
+        echo "Setting kibana_system password";
+        curl -s -X POST -u "elastic:test_pass" -H "Content-Type: application/json" http://secured-elasticsearch-1:${ELASTICSEARCH_PORT:-9200}/_security/user/kibana_system/_password -d "{\"password\":\"test_pass\"}" | grep -q "^{}";
+        echo "All done!";
+      '
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - public_shared
+    
+  elasticsearch:
+    restart: always
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1-amd64
+    environment: 
+      - discovery.type=single-node
+      - logger.level=${ELASTICSEARCH_LOG_LEVEL:-INFO}
+      - ELASTIC_PASSWORD=test_pass
+      - xpack.security.enabled=true
+    networks:
+      - public_shared
+    ports:
+      - ${ELASTICSEARCH_PORT:-9200}:9200
+    healthcheck:
+      test: curl -u elastic:test_pass ${ELASTICSEARCH_HOST:-http://localhost}:${ELASTICSEARCH_PORT:-9200}
+      interval: 15s
+      timeout: 10s
+      retries: 10
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  kibana:
+    restart: always
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      setup:
+        condition: service_started
+    image: docker.elastic.co/kibana/kibana:8.5.1-amd64
+    environment:
+      - SERVER_PUBLICBASEURL=http://localhost
+      - SERVER_NAME=elastic.kibana.test.pl
+      - ELASTICSEARCH_HOSTS=http://secured-elasticsearch-1:${ELASTICSEARCH_PORT:-9200}
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=test_pass
+      - VIRTUAL_HOST=elastic.kibana.test.pl
+      - LETSENCRYPT_HOST=elastic.kibana.test.pl
+      - VIRTUAL_PORT=5601
+    ports:
+      - 5601:5601
+    networks:
+      - public_shared
+    mem_limit: 512m
+
+networks:
+  public_shared:
+    external: true

@@ -146,6 +146,15 @@ All containers are simple apps for testing some function etc.
         
         stop$ docker compose -f ./wiki/gollum/docker-compose.yml down
         ```
+
+7. Elasticsearch
+
+    - bitbucket pipeline
+        ```shell
+        start$ docker compose -f ./elasticsearch/bitbucket_pipe/docker-compose.yml up -d --build --remove-orphans --no-deps
+
+        stop$ docker compose -f ./elasticsearch/bitbucket_pipe/docker-compose.yml down
+        ```
 ## Author
 
     - Jakub Kabat - github:jaxa1337
