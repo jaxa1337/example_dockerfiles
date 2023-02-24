@@ -1,0 +1,66 @@
+version: '3.5'
+
+networks:
+  shared_network:
+    name: carcolor_network
+    driver: bridge
+
+services:
+  setup:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1-amd64
+    user: "0"
+
+    command: >
+      bash -c '
+        echo "Waiting for Elasticsearch availability";
+        curl -s ${ELASTICSEARCH_CONTAINER_NAME} | grep -q "missing authentication credentials";
+        echo "Setting kibana_system password";
+        curl -s -X POST -u "${ELASTICSEARCH_USER:-elastic}:${ELASTICSEARCH_PASSWORD:-elastic}" -H "Content-Type: application/json" ${ELASTICSEARCH_CONTAINER_NAME}/_security/user/kibana_system/_password -d "{\"password\":\"kibana\"}" | grep -q "^{}";
+        echo "All done!";
+        sleep 1200
+      '
+    networks:
+      - shared_network
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  elasticsearch:
+    restart: always
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1-amd64
+    environment: 
+      - discovery.type=single-node
+      - logger.level=${ELASTICSEARCH_LOG_LEVEL:-ERROR}
+      - ELASTIC_PASSWORD=${ELASTICSEARCH_PASSWORD}
+      - xpack.security.enabled=true
+    networks:
+      - shared_network
+    ports:
+      - ${ELASTICSEARCH_PORT:-9200}:9200
+    healthcheck:
+      test: curl -s ${ELASTICSEARCH_HOSTS:-http://localhost}:${ELASTICSEARCH_PORT:-9200} >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 15
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+  
+  kibana:
+    restart: always
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      setup:
+        condition: service_started
+    image: docker.elastic.co/kibana/kibana:8.5.1-amd64
+    ports:
+      - ${KIBANA_PORT:-5601}:5601
+    environment:
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_CONTAINER_NAME}
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=kibana
+      - SERVER_PUBLICBASEURL=http://localhost
+    networks:
+      - shared_network
